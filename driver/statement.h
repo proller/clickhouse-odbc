@@ -1,6 +1,7 @@
 #pragma once
 
 #include "connection.h"
+#include "typeinfo.h"
 #include "result_set.h"
 
 #include <Poco/Net/HTTPResponse.h>

@@ -42,7 +42,7 @@ const std::string Statement::getQuery() const
 
 const TypeInfo & Statement::getTypeInfo(const std::string & type_name) const
 {
-    return connection.environment.types_info.at(type_name);
+    return Typeinfo::types_info.at(type_name);
 }
 
 bool Statement::isEmpty() const

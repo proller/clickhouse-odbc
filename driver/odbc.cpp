@@ -179,7 +179,7 @@ SQLColAttribute(HSTMT statement_handle, SQLUSMALLINT column_number, SQLUSMALLINT
         std::string str_value;
 
         const ColumnInfo & column_info = statement.result.getColumnInfo(column_idx);
-        const TypeInfo & type_info = statement.connection.environment.types_info.at(column_info.type_without_parameters);
+        const TypeInfo & type_info = Typeinfo::types_info.at(column_info.type_without_parameters);
 
         switch (field_identifier)
         {
@@ -313,7 +313,7 @@ SQLDescribeCol(HSTMT statement_handle,
         size_t column_idx = column_number - 1;
 
         const ColumnInfo & column_info = statement.result.getColumnInfo(column_idx);
-        const TypeInfo & type_info = statement.connection.environment.types_info.at(column_info.type_without_parameters);
+        const TypeInfo & type_info = Typeinfo::types_info.at(column_info.type_without_parameters);
 
         if (out_type)
             *out_type = type_info.sql_type;
@@ -777,7 +777,7 @@ SQLColumns(HSTMT statement_handle,
                 }
             }
 
-            const TypeInfo & type_info = env->types_info.at(type_column.type_without_parameters);
+            const TypeInfo & type_info = Typeinfo::types_info.at(type_column.type_without_parameters);
 
             row->data.at(4).data = std::to_string(type_info.sql_type);
             row->data.at(5).data = type_info.sql_type_name;
@@ -890,7 +890,7 @@ SQLGetTypeInfo(HSTMT statement_handle,
                 ;
         };
 
-        for (const auto & name_info : statement.connection.environment.types_info)
+        for (const auto & name_info : Typeinfo::types_info)
         {
             add_query_for_type(name_info.first, name_info.second);
         }
@@ -901,13 +901,13 @@ SQLGetTypeInfo(HSTMT statement_handle,
         //      are SQL_TYPE_DATE, SQL_TYPE_TIME, and SQL_TYPE_TIMESTAMP, respectively;
         //      in ODBC 2.x, the data types are SQL_DATE, SQL_TIME, and SQL_TIMESTAMP.
         {
-            auto info = statement.connection.environment.types_info.at("Date");
+            auto info = Typeinfo::types_info.at("Date");
             info.sql_type = SQL_DATE;
             add_query_for_type("Date", info);
         }
 
         {
-            auto info = statement.connection.environment.types_info.at("DateTime");
+            auto info = Typeinfo::types_info.at("DateTime");
             info.sql_type = SQL_TIMESTAMP;
             add_query_for_type("DateTime", info);
         }

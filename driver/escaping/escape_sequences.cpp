@@ -1,5 +1,9 @@
 #include "escape_sequences.h"
 #include "lexer.h"
+#include "environment.h"
+#include "typeinfo.h"
+#include <map>
+
 
 using namespace std;
 
@@ -8,12 +12,9 @@ namespace {
 string processEscapeSequencesImpl(const StringView seq, Lexer& lex);
 
 string convertFunctionByType(const StringView& typeName) {
-    if (typeName == "SQL_BIGINT") {
-        return "toInt64";
-    }
-    if (typeName == "SQL_INTEGER") {
-        return "toInt32";
-    }
+    auto type_name =  typeName.to_string();
+    if (Typeinfo::convert_sql_odbc_to_clickhouse.find(type_name)!=Typeinfo::convert_sql_odbc_to_clickhouse.end())
+        return "to" + Typeinfo::convert_sql_odbc_to_clickhouse.at(type_name);
     return string();
 }
 

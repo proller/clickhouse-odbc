@@ -4,8 +4,17 @@
 TEST(EscapeSequencesCase, ParseConvert) {
     ASSERT_EQ(
         replaceEscapeSequences("SELECT {fn CONVERT(1, SQL_BIGINT)}"),
-        "SELECT toInt64(1)"
+              "SELECT toInt64(1)"
     );
+    ASSERT_EQ(
+        replaceEscapeSequences("SELECT {fn CONVERT(1, SQL_TINYINT)}"),
+              "SELECT toInt8(1)"
+    );
+    ASSERT_EQ(
+        replaceEscapeSequences("SELECT {fn CONVERT('one', SQL_VARCHAR)}"),
+              "SELECT toString('one')"
+    );
+    
 }
 
 TEST(EscapeSequencesCase, ParseConcat) {

@@ -1,3 +1,7 @@
+add_library(clickhouse-odbc-typeinfo 
+    typeinfo.cpp
+)
+
 add_subdirectory(escaping)
 
 add_library(clickhouse-odbc SHARED
