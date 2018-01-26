@@ -6,7 +6,7 @@
 
 :: call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 
-SET PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\
+SET PATH=%PATH%;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\
 msbuild /p:Configuration=Release odbc64.sln
 msbuild /p:Configuration=Release odbc32.sln
 msbuild /p:Configuration=Debug odbc64.sln
