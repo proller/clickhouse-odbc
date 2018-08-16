@@ -18,8 +18,11 @@
 #include <locale>
 #include <string>
 
+#include <codecvt>
+
+
 #ifdef NANODBC_USE_IODBC_WIDE_STRINGS
-#error Examples do not support the iODBC wide strings
+//#error Examples do not support the iODBC wide strings
 #endif
 
 // TODO: These convert utils need to be extracted to a private
@@ -49,6 +52,9 @@ inline nanodbc::string convert(std::string const& in)
         std::wstring_convert<std::codecvt_utf8_utf16<wide_char_t>, wide_char_t>().from_bytes(in);
     auto p = reinterpret_cast<wide_char_t const*>(s.data());
     out.assign(p, p + s.size());
+#elif NANODBC_USE_IODBC_WIDE_STRINGS
+    //out = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().from_bytes(in);
+    out = std::wstring_convert<std::codecvt_utf8<nanodbc::string::value_type>, nanodbc::string::value_type>().from_bytes(in);
 #else
     out = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>().from_bytes(in);
 #endif
@@ -76,6 +82,9 @@ inline std::string convert(nanodbc::string const& in)
     std::wstring_convert<std::codecvt_utf8_utf16<wide_char_t>, wide_char_t> convert;
     auto p = reinterpret_cast<const wide_char_t*>(in.data());
     out = convert.to_bytes(p, p + in.size());
+#elif NANODBC_USE_IODBC_WIDE_STRINGS
+    //out = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(in);
+    out = std::wstring_convert<std::codecvt_utf8<nanodbc::string::value_type>, nanodbc::string::value_type>().to_bytes(in);
 #else
     out = std::wstring_convert<std::codecvt_utf8_utf16<char16_t>, char16_t>().to_bytes(in);
 #endif

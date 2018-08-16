@@ -81,7 +81,7 @@ std::string stringFromSQLSymbols(SQLTCHAR * data, SIZE_TYPE symbols = SQL_NTS)
     else if (symbols < 0)
         throw std::runtime_error("invalid size of string : " + std::to_string(symbols));
 #ifdef UNICODE
-#   if _win_
+#   if _win_B
     return std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(std::wstring(data, symbols));
 #   elif ODBC_IODBC
     return std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(std::wstring(data, symbols));
