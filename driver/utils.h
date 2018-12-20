@@ -92,7 +92,6 @@ LOG("stringFromSQLSymbols: ANSI symbols=" << symbols << " strlen=" << dsymbols <
 #endif
 
 
-//try {
 #if defined(UNICODE)
 #   if ODBC_WCHAR
     return std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(std::wstring(data, symbols));
@@ -102,9 +101,6 @@ LOG("stringFromSQLSymbols: ANSI symbols=" << symbols << " strlen=" << dsymbols <
 #else
     return{ (const char*)data, (size_t)symbols };
 #endif
-//} catch (const std::exception & e) {
-//LOG("catch " << e.what());
-//}
 
 }
 

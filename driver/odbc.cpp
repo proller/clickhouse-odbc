@@ -94,6 +94,7 @@ LOG("query0="<< query);
         statement.prepareQuery(query);
 
         LOG("query(" << query.size() << ") = [" << query << "]");
+
         return SQL_SUCCESS;
     });
 }
