@@ -1,5 +1,3 @@
-find_package (Threads)
-
 add_subdirectory(log)
 add_subdirectory(escaping)
 if (WIN32)
